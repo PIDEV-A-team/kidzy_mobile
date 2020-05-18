@@ -6,14 +6,12 @@
 package com.kidzy.gui;
 
 import com.codename1.capture.Capture;
-import com.codename1.ui.ComboBox;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.FlowLayout;
 import com.kidzy.entities.Classe;
-import java.io.IOException;
 
 
 import rest.file.uploader.tn.FileUploader;
