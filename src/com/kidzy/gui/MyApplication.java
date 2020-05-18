@@ -52,7 +52,7 @@ public class MyApplication {
             current.show();
             return;
         }
-        new SelectchildForm().show();
+        new SplashForm().show();
     }
 
     public void stop() {
