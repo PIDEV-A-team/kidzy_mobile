@@ -18,12 +18,12 @@ public class Facture {
     private Date date_facture ; 
     private String due_date_facture;
     private Enfant idEnf;
-    private User idParent ;
+    private youssef_user idParent ;
     private Boolean paye ;
     private int status ;
     private Pack pack ;
 
-    public Facture(int idFacture, float total, Date date_facture, String due_date_facture, Enfant idEnf, User idParent, Boolean paye, int status, Pack pack) {
+    public Facture(int idFacture, float total, Date date_facture, String due_date_facture, Enfant idEnf, youssef_user idParent, Boolean paye, int status, Pack pack) {
         this.idFacture = idFacture;
         this.total = total;
         this.date_facture = date_facture;
@@ -78,11 +78,11 @@ public class Facture {
         this.idEnf = idEnf;
     }
 
-    public User getIdParent() {
+    public youssef_user getIdParent() {
         return idParent;
     }
 
-    public void setIdParent(User idParent) {
+    public void setIdParent(youssef_user idParent) {
         this.idParent = idParent;
     }
 

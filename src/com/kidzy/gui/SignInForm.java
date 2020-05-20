@@ -17,8 +17,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 package com.kidzy.gui;
+import com.codename1.ui.Dialog;
 import com.kidzy.gui.InboxForm;
 import com.codename1.ui.FontImage;
+import com.kidzy.entities.Session;
+import com.kidzy.entities.user;
+import com.kidzy.services.ServiceUser;
 
 /**
  * GUI builder created Form
@@ -120,6 +124,20 @@ public class SignInForm extends com.codename1.ui.Form {
 
 //-- DON'T EDIT ABOVE THIS LINE!!!
     public void onButton_2ActionEvent(com.codename1.ui.events.ActionEvent ev) {
+       // new InboxForm().show();
+       
+       user User = ServiceUser.getInstance().Login(this.gui_Text_Field_2.getText(), this.gui_Text_Field_1.getText());
+                    if (User != null) {
+                        
+                        this.gui_Text_Field_2.setText("");
+                        this.gui_Text_Field_1.setText("");
+                    System.out.println("ok");
+                    
+                        Session.start(User);
+                        
+                    
+                    }else {                    
+                        Dialog.show("Alert", "Verifiez vous données !! ", "OK", null);}
         new InboxForm().show();
     }
 

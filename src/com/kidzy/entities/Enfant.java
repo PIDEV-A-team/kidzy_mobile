@@ -14,8 +14,8 @@ import java.util.Date;
 public class Enfant {
     private int id_enfant;
    
-    private Classe classe;
-    private Garde garde;
+    private Classe idClasse;
+    private Garde idGarde;
     private String nom_enfant;
     private String prenom_enfant;
     
@@ -23,25 +23,59 @@ public class Enfant {
     private String dateN_enfant;
     private Date updated_at;
     /*******/
-    private User parent ;
+    private youssef_user Parent ;
+    private user idParent;
+
+   public Enfant() {
+    }
+
+  
+    public Enfant(String nom_enfant, String prenom_enfant, String image_enfant, String dateN_enfant) {
+        this.nom_enfant = nom_enfant;
+        this.prenom_enfant = prenom_enfant;
+        this.image_enfant = image_enfant;
+        this.dateN_enfant = dateN_enfant;
+    }
+
+    public Enfant(int id_enfant, String nom_enfant, String prenom_enfant, String image_enfant, String dateN_enfant, Classe idClasse, Garde idGarde, user idParent) {
+        this.id_enfant = id_enfant;
+        this.nom_enfant = nom_enfant;
+        this.prenom_enfant = prenom_enfant;
+        this.image_enfant = image_enfant;
+        this.dateN_enfant = dateN_enfant;
+        this.idClasse = idClasse;
+        this.idGarde = idGarde;
+        this.idParent = idParent;
+    }
+
+    public Enfant(String nom_enfant, String prenom_enfant, String image_enfant, String dateN_enfant, Classe idClasse, Garde idGarde, user idParent) {
+        this.nom_enfant = nom_enfant;
+        this.prenom_enfant = prenom_enfant;
+        this.image_enfant = image_enfant;
+        this.dateN_enfant = dateN_enfant;
+        this.idClasse = idClasse;
+        this.idGarde = idGarde;
+        this.idParent = idParent;
+    }
+
+    public Enfant(String nom_enfant, String prenom_enfant, String image_enfant, String dateN_enfant, user idParent) {
+        this.nom_enfant = nom_enfant;
+        this.prenom_enfant = prenom_enfant;
+        this.image_enfant = image_enfant;
+        this.dateN_enfant = dateN_enfant;
+        this.idParent = idParent;
+    }
+
+  
 
     @Override
     public String toString() {
-        return "Enfant{" + "id_enfant=" + id_enfant + ", classe=" + classe + ", garde=" + garde + ", nom_enfant=" + nom_enfant + ", prenom_enfant=" + prenom_enfant + ", image_enfant=" + image_enfant + ", dateN_enfant=" + dateN_enfant + ", updated_at=" + updated_at + ", parent=" + parent + '}';
+        return "Enfant{" + "id_enfant=" + id_enfant + ", nom_enfant=" + nom_enfant + ", prenom_enfant=" + prenom_enfant + ", image_enfant=" + image_enfant + ", dateN_enfant=" + dateN_enfant + ", idClasse=" + idClasse + ", idGarde=" + idGarde + ", idParent=" + idParent + '}';
     }
 
-    public Enfant() {
-    }
 
-    public User getParent() {
-        return parent;
-    }
 
-    public void setParent(User parent) {
-        this.parent = parent;
-    }
-    
-      public int getId_enfant() {
+    public int getId_enfant() {
         return id_enfant;
     }
 
@@ -89,21 +123,36 @@ public class Enfant {
         this.updated_at = updated_at;
     }
 
-    public Classe getClasse() {
-        return classe;
+    public Classe getIdClasse() {
+        return idClasse;
     }
 
-    public void setClasse(Classe classe) {
-        this.classe = classe;
+    public void setIdClasse(Classe idClasse) {
+        this.idClasse = idClasse;
     }
 
-    public Garde getGarde() {
-        return garde;
+    public Garde getIdGarde() {
+        return idGarde;
     }
 
-    public void setGarde(Garde garde) {
-        this.garde = garde;
+    public void setIdGarde(Garde idGarde) {
+        this.idGarde = idGarde;
     }
 
+    public user getIdParent() {
+        return idParent;
+    }
+
+    public void setIdParent(user idParent) {
+        this.idParent = idParent;
+    }
+
+    public youssef_user getParent() {
+        return Parent;
+    }
+
+    public void setParent(youssef_user Parent) {
+        this.Parent = Parent;
+    }
    
 }

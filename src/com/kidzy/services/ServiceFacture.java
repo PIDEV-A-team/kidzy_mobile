@@ -15,7 +15,7 @@ import com.codename1.ui.events.ActionListener;
 import com.kidzy.entities.Enfant;
 import com.kidzy.entities.Facture;
 import com.kidzy.entities.Pack;
-import com.kidzy.entities.User;
+import com.kidzy.entities.youssef_user;
 import com.kidzy.utils.Statics;
 
 import java.io.IOException;
@@ -99,7 +99,7 @@ public class ServiceFacture {
                 
                 JSONObject parent = result1.getJSONObject("parent");
                // System.out.println(parent);
-                User u = new User();
+                youssef_user u = new youssef_user();
                 u.setNom_parent(parent.get("nom_parent").toString());
                 u.setPrenom_parent(parent.get("prenom_parent").toString());
                 u.setEmail(parent.getString("email"));
@@ -203,7 +203,7 @@ public class ServiceFacture {
                 JSONObject result1 = result.getJSONObject(i);
                 JSONObject parent = result1.getJSONObject("parent");
                 
-                User u = new User();
+                youssef_user u = new youssef_user();
                 u.setIduser(parent.getInt("id_parent"));
                 u.setNom_parent(parent.get("nom_parent").toString());
                 u.setPrenom_parent(parent.get("prenom_parent").toString());
@@ -262,7 +262,7 @@ public class ServiceFacture {
                 
                 JSONObject parent = result1.getJSONObject("parent");
                 
-                User u = new User();
+                youssef_user u = new youssef_user();
                 u.setIduser(parent.getInt("id_parent"));
                 u.setNom_parent(parent.get("nom_parent").toString());
                 u.setPrenom_parent(parent.get("prenom_parent").toString());

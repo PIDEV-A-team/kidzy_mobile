@@ -19,6 +19,7 @@
 
 package com.kidzy.gui;
 
+import com.codename1.facebook.User;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
@@ -28,6 +29,8 @@ import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.kidzy.entities.Session;
+import com.kidzy.entities.user;
 
 /**
  * Utility methods common to forms e.g. for binding the side menu
@@ -87,10 +90,10 @@ public class BaseForm extends Form {
         inbox.setUIID("SideCommand");
         inboxButton.addActionListener(e -> new InboxForm().show());
         getToolbar().addComponentToSideMenu(inbox);
-        
+         user User=Session.getCurrentSession();
        // getToolbar().addCommandToSideMenu("Stat", statsImage, e -> new PricingForm(res).show());
         //getToolbar().addCommandToSideMenu("Calendar", calendarImage, e -> new CalendarForm(res).show());
-         
+          if (User.getRole().equals("parent")){
         getToolbar().addCommandToSideMenu("Club", null, e -> {});
         getToolbar().addCommandToSideMenu("Classe", null, e -> new ClasseForm().show());
          getToolbar().addCommandToSideMenu("Avis", null, e -> {});
@@ -102,7 +105,28 @@ public class BaseForm extends Form {
         
         getToolbar().addCommandToSideMenu("Profile", null, e -> {});
         getToolbar().addCommandToSideMenu("Déconnecter", null, e -> {});
-        
+        }else  if (User.getRole().equals("maitresse")){
+              getToolbar().addCommandToSideMenu("Réclamation", null, e -> {});
+           getToolbar().addCommandToSideMenu("Enfant", null, e -> new EnfantForm().show());
+        //getToolbar().addCommandToSideMenu("Trending", trendingImage, e -> new TrendingForm(res).show());
+        getToolbar().addCommandToSideMenu("Profile", null, e -> {});
+        getToolbar().addCommandToSideMenu("Déconnecter", null, e -> new SignInForm().show());
+         
+         
+         }else {
+            getToolbar().addCommandToSideMenu("Club", null, e -> new ClubForm().show());
+            getToolbar().addCommandToSideMenu("Classe", null, e -> new ClasseForm().show());
+         getToolbar().addCommandToSideMenu("Avis", null, e -> {});
+          getToolbar().addCommandToSideMenu("Réclamation", null, e -> {});
+           getToolbar().addCommandToSideMenu("Enfant", null, e -> new EnfantForm().show());
+            getToolbar().addCommandToSideMenu("Garde", null, e -> new GardeForm().show());
+             getToolbar().addCommandToSideMenu("Pricing", statsImage, e -> new SelectchildForm(res).show());
+              getToolbar().addCommandToSideMenu("Evénement", null, e -> {});
+        //getToolbar().addCommandToSideMenu("Trending", trendingImage, e -> new TrendingForm(res).show());
+        getToolbar().addCommandToSideMenu("Profile", null, e -> {});
+        getToolbar().addCommandToSideMenu("Déconnecter", null, e -> new SignInForm().show());
+         
+          }
        
         
     }
