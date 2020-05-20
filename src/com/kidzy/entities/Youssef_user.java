@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Youssef Mimouni
  */
-public class User {
+public class Youssef_user {
     private int iduser;
     private String nom_parent ;
     private String prenom_parent;
@@ -25,12 +25,12 @@ public class User {
         this.email = email;
     }
 
-    public User(String nom_parent, String prenom_parent) {
+    public Youssef_user(String nom_parent, String prenom_parent) {
         this.nom_parent = nom_parent;
         this.prenom_parent = prenom_parent;
     }
 
-    public User() {
+    public Youssef_user() {
     }
 
     public int getIduser() {
@@ -73,7 +73,7 @@ public class User {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final User other = (User) obj;
+        final Youssef_user other = (Youssef_user) obj;
         if (!Objects.equals(this.nom_parent, other.nom_parent)) {
             return false;
         }

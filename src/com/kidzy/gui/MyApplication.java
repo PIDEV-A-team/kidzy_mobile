@@ -13,6 +13,11 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
+import com.codename1.ui.Button;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.spinner.Picker;
+import java.util.Date;
 
 
 /**
@@ -52,7 +57,16 @@ public class MyApplication {
             current.show();
             return;
         }
-        new SplashForm().show();
+       
+        
+        /*Picker datePicker = new Picker();
+        datePicker.setStartDate(null);
+        datePicker.setType(Display.PICKER_TYPE_DATE);
+
+
+        datePicker.setDate(new Date());*/
+
+        new SelectchildForm().show();
     }
 
     public void stop() {

@@ -377,7 +377,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
         if (p.contains(idenfant.getPrenom_enfant())){ 
                 ArrayList<Facture> listf = ServiceFacture.getInstance().getFacturesbyenfant(idenfant.getId_enfant());
                 Facture f = listf.get(0);
-                new StatsForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
+                new PaymentSuccessForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
         }
         else{ new PricingForm(com.codename1.ui.util.Resources.getGlobalResources(), idenfant).show();}
     }
@@ -404,7 +404,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
         public void actionPerformed(ActionEvent evt) {
             ArrayList<Facture> listf = ServiceFacture.getInstance().getFacturesbyenfant(idenfant.getId_enfant());
                 Facture f = listf.get(0);
-                new StatsForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
+                new PaymentSuccessForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
         }
     };
     

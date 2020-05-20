@@ -161,7 +161,7 @@ public class PricingForm extends BaseForm {
                          if (Dialog.show("Confirm", "Do you want to proceed?", "OK", "Cancel")) {
                              ServiceFacture.getInstance().addFacture(f);
                              System.out.println("aze");
-                             new StatsForm(res, f).show();
+                             new PaymentSuccessForm(res, f).show();
                           }
                          else{}
                          

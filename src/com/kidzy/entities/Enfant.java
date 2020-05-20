@@ -23,7 +23,7 @@ public class Enfant {
     private String dateN_enfant;
     private Date updated_at;
     /*******/
-    private User parent ;
+    private Youssef_user parent ;
 
     @Override
     public String toString() {
@@ -33,11 +33,11 @@ public class Enfant {
     public Enfant() {
     }
 
-    public User getParent() {
+    public Youssef_user getParent() {
         return parent;
     }
 
-    public void setParent(User parent) {
+    public void setParent(Youssef_user parent) {
         this.parent = parent;
     }
     

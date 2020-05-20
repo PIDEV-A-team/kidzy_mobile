@@ -21,6 +21,8 @@ package com.kidzy.gui;
 
 
 
+import com.codename1.io.FileSystemStorage;
+import com.codename1.io.Util;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 
@@ -43,16 +45,28 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.codename1.ui.Component;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.spinner.DateSpinner;
+import com.codename1.ui.spinner.Picker;
 import com.kidzy.entities.Facture;
+import com.kidzy.services.ServiceFacture;
+import com.kidzy.services.ServicePack;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 
-public class StatsForm extends BaseForm {
-    public StatsForm(Resources res,Facture f) {
+
+
+
+public class PaymentSuccessForm extends BaseForm {
+    public PaymentSuccessForm(Resources res,Facture f)  {
         setLayout(new FlowLayout());
         setUIID("StatsForm1");
         
@@ -68,20 +82,52 @@ public class StatsForm extends BaseForm {
         //yow.setUIID("prconf");
         all.setUIID("prconf");
         Button bt = new Button("Retour");
-       bt.setUIID("retourbt");
-       bt.addActionListener(new ActionListener() {
+        bt.setUIID("retourbt");
+        Button imprimer = new Button("Imprimer");
+        imprimer.setUIID("retourbt");
+        Container datechoice = new Container(BoxLayout.yCenter());
+        Label selectdate = new Label("please select payment day","retourbt");
+        Picker datePicker = new Picker();
+        Date enddate = null;
+        
+        try {
+            enddate=new SimpleDateFormat("yyyy/MM/dd").parse(f.getDue_date_facture());
+        } catch (ParseException ex) {
+           
+        }
+        datePicker.setEndDate(enddate);
+        datePicker.setType(Display.PICKER_TYPE_DATE);
+        datePicker.setDate(f.getDate_facture());
+        datePicker.setUIID("retourbt");
+       datePicker.setStartDate(f.getDate_facture());
+       
+       datePicker.addActionListener((ActionListener) (ActionEvent evt) -> {
+           Date newdate = datePicker.getDate();
+           if (newdate != null ) {
+               System.out.println(newdate);
+               System.out.println(f.getDate_facture());
+           }
+        });
+       
+        datechoice.add(datePicker);
+        imprimer.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent evt) {
-                new InboxForm().show();
+            public void actionPerformed(ActionEvent evt) 
+            {
+                String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/packs/print/5/1/7/41/320/2020-06-19";
+                FileSystemStorage fs = FileSystemStorage.getInstance();                
+                String fileName = fs.getAppHomePath() + "fac.pdf";
+                Util.downloadUrlToFile(url, fileName, true);
+                Display.getInstance().execute(fileName);
             }
         });
        Container grid = GridLayout.encloseIn(1,gridElement(res, f, false));
         all.add(BorderLayout.CENTER, grid);
-       // add(BorderLayout.SOUTH, createBottomList(res));
+       
         all.add(BorderLayout.NORTH,yow );
-        all.add(BorderLayout.SOUTH,bt );
-        //white.add(all);
+        all.add(BorderLayout.SOUTH,datechoice );
+        
         add(all);
     }
 

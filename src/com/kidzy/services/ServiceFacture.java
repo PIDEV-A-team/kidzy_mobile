@@ -11,11 +11,13 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.io.Storage;
+import com.codename1.io.Util;
 import com.codename1.ui.events.ActionListener;
 import com.kidzy.entities.Enfant;
 import com.kidzy.entities.Facture;
 import com.kidzy.entities.Pack;
-import com.kidzy.entities.User;
+import com.kidzy.entities.Youssef_user;
 import com.kidzy.utils.Statics;
 
 import java.io.IOException;
@@ -99,7 +101,7 @@ public class ServiceFacture {
                 
                 JSONObject parent = result1.getJSONObject("parent");
                // System.out.println(parent);
-                User u = new User();
+                Youssef_user u = new Youssef_user();
                 u.setNom_parent(parent.get("nom_parent").toString());
                 u.setPrenom_parent(parent.get("prenom_parent").toString());
                 u.setEmail(parent.getString("email"));
@@ -203,7 +205,7 @@ public class ServiceFacture {
                 JSONObject result1 = result.getJSONObject(i);
                 JSONObject parent = result1.getJSONObject("parent");
                 
-                User u = new User();
+                Youssef_user u = new Youssef_user();
                 u.setIduser(parent.getInt("id_parent"));
                 u.setNom_parent(parent.get("nom_parent").toString());
                 u.setPrenom_parent(parent.get("prenom_parent").toString());
@@ -262,7 +264,7 @@ public class ServiceFacture {
                 
                 JSONObject parent = result1.getJSONObject("parent");
                 
-                User u = new User();
+                Youssef_user u = new Youssef_user();
                 u.setIduser(parent.getInt("id_parent"));
                 u.setNom_parent(parent.get("nom_parent").toString());
                 u.setPrenom_parent(parent.get("prenom_parent").toString());
@@ -306,5 +308,13 @@ public class ServiceFacture {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return payed;
+    }
+        public void getinvoicepdf() throws IOException{
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/packs/print/5/1/7/40/320/2020-06-18";
+        
+       
+        
+        Util.downloadUrlToFile(url, "pdf", true);
+         Storage.getInstance().createInputStream(url);
     }
 }
