@@ -15,15 +15,15 @@ public class Facture {
     private int idFacture ;
     private float total ;
     
-    private Date date_facture ; 
+    private Date date_facture , payedate ; 
     private String due_date_facture;
     private Enfant idEnf;
-    private Youssef_user idParent ;
+    private user idParent ;
     private Boolean paye ;
     private int status ;
     private Pack pack ;
 
-    public Facture(int idFacture, float total, Date date_facture, String due_date_facture, Enfant idEnf, Youssef_user idParent, Boolean paye, int status, Pack pack) {
+    public Facture(int idFacture, float total, Date date_facture, String due_date_facture, Enfant idEnf, user idParent, Boolean paye, int status, Pack pack) {
         this.idFacture = idFacture;
         this.total = total;
         this.date_facture = date_facture;
@@ -36,6 +36,14 @@ public class Facture {
     }
 
     public Facture() {
+    }
+
+    public Date getPayedate() {
+        return payedate;
+    }
+
+    public void setPayedate(Date payedate) {
+        this.payedate = payedate;
     }
 
     public int getIdFacture() {
@@ -78,11 +86,11 @@ public class Facture {
         this.idEnf = idEnf;
     }
 
-    public Youssef_user getIdParent() {
+    public user getIdParent() {
         return idParent;
     }
 
-    public void setIdParent(Youssef_user idParent) {
+    public void setIdParent(user idParent) {
         this.idParent = idParent;
     }
 
@@ -134,6 +142,8 @@ public class Facture {
 
     @Override
     public String toString() {
-        return "Facture{" + "idFacture=" + idFacture + ", total=" + total + ", date_facture=" + date_facture + ", due_date_facture=" + due_date_facture + ", idEnf=" + idEnf + ", idParent=" + idParent + ", paye=" + paye + ", status=" + status + ", pack=" + pack + '}';
+        return "Facture{" + "idFacture=" + idFacture + ", total=" + total + ", date_facture=" + date_facture + ", payedate=" + payedate + ", due_date_facture=" + due_date_facture + ", idEnf=" + idEnf + ", idParent=" + idParent + ", paye=" + paye + ", status=" + status + ", pack=" + pack + '}';
     }
+
+    
 }

@@ -18,16 +18,18 @@
  */
 package com.kidzy.gui;
 
+import com.codename1.components.ImageViewer;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
-import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.Painter;
 import com.codename1.ui.RadioButton;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.events.SelectionListener;
@@ -37,9 +39,10 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.kidzy.entities.Enfant;
 import com.kidzy.entities.Facture;
+import com.kidzy.entities.Session;
 import com.kidzy.services.ServiceFacture;
+import com.kidzy.services.ServiceUser;
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
 
 /**
  * GUI builder created Form
@@ -104,7 +107,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
                 hh = (int)(parent.getHeight() - height);
             }
             
-            g.drawImage(pic, parent.getX(), parent.getY(), width, (int)height);
+            g.drawImage(pic ,parent.getX(), parent.getY(), width, (int)height);
             g.setColor(0xffffff);
             g.setAlpha(255);
             g.fillRect(parent.getX(), parent.getY() + parent.getHeight() - hh, parent.getWidth(), hh);
@@ -139,14 +142,19 @@ public class SelectchildForm extends com.codename1.ui.Form {
             if (j==0){gui_tab.get(j).setSelected(true);}
             
             Image bla = resourceObjectInstance.getImage("user-3.jpg");
-            
+            EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(300, 300, 0xffff0000), true);
+            URLImage logo = URLImage.createToStorage(placeholder, listpacks.get(i).getImage_enfant() + ".cache",
+                    "http://localhost/kidzy_web/web/images/enfants/" + listpacks.get(i).getImage_enfant());
+              System.out.println(logo);
+            ImageViewer ivLogo = new ImageViewer();
+            ivLogo.setImage(logo);
             gui_tabRoot.get(j).setLayout(new BorderLayout());
             content.get(j).add(new Label(listpacks.get(i).getNom_enfant()+" "+listpacks.get(i).getPrenom_enfant(), "WelcomeTitle")).add(new Label(resourceObjectInstance.getImage("welcome-separator.png"), "WelcomeTitle"));
             content.get(j).setUIID("WelcomeContent");
                 
                 gui_tabRoot.get(j).add(BorderLayout.SOUTH, content.get(j));
                
-                gui_tabRoot.get(j).getUnselectedStyle().setBgPainter(new BgPainter(gui_tabRoot.get(j), bla, content.get(j).getPreferredH() +
+                gui_tabRoot.get(j).getUnselectedStyle().setBgPainter(new BgPainter(gui_tabRoot.get(j), logo, content.get(j).getPreferredH() +
                 content.get(j).getUnselectedStyle().getPaddingTop() + 
                 content.get(j).getUnselectedStyle().getPaddingBottom() + 
                 content.get(j).getUnselectedStyle().getMarginTop() + 
@@ -245,7 +253,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
     private com.codename1.ui.Button gui_Button_1 = new com.codename1.ui.Button();
     private com.codename1.ui.Label gui_Label_1 = new com.codename1.ui.Label();
     ArrayList<RadioButton> gui_tab = new ArrayList<RadioButton>();
-        ArrayList<Enfant> listpacks = ServiceFacture.getInstance().getenfantsp(7);
+        ArrayList<Enfant> listpacks = ServiceFacture.getInstance().getenfantsp(Session.getCurrentSession().getId());
        ArrayList<Container> gui_tabRoot = new ArrayList<Container>();
         ArrayList<Container> content = new ArrayList<Container>();
         Enfant idenfant = null;
@@ -255,7 +263,8 @@ public class SelectchildForm extends com.codename1.ui.Form {
     private void guiBuilderBindComponentListeners() {
         EventCallbackClass callback = new EventCallbackClass();
         gui_tab3.addActionListener(callback);
-        gui_Button_1.addActionListener(callback);
+        //gui_Button_1.addActionListener(callback);
+        
     }
 
     class EventCallbackClass implements com.codename1.ui.events.ActionListener, com.codename1.ui.events.DataChangedListener {
@@ -277,7 +286,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
                 ontab3ActionEvent(ev);
             }
             if(sourceComponent == gui_Button_1) {
-                onButton_1ActionEvent(ev);
+                //onButton_1ActionEvent(ev);
             }
         }
 
@@ -339,6 +348,24 @@ public class SelectchildForm extends com.codename1.ui.Form {
         gui_Button_1.setText("Get Started");
         gui_Button_1.setUIID("GetStartedButton");
         gui_Button_1.setName("Button_1");
+        gui_Button_1.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+               ArrayList<String> p = new ArrayList<String>();
+        for (Enfant obj : ServiceFacture.getInstance().getpayed())
+        {
+                p.add(obj.getPrenom_enfant());
+        }
+        
+        if (p.contains(idenfant.getPrenom_enfant())){ 
+                ArrayList<Facture> listf = ServiceFacture.getInstance().getFacturesbyenfant(idenfant.getId_enfant());
+                Facture f = listf.get(0);
+                new PaymentSuccessForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
+        }
+        else{new PricingForm(com.codename1.ui.util.Resources.getGlobalResources(), idenfant).show();}
+            }
+        });
         /*ArrayList<String> p = new ArrayList<String>();
         for (Enfant obj : ServiceFacture.getInstance().getpayed())
         {
@@ -366,7 +393,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
     public void ontab3ActionEvent(com.codename1.ui.events.ActionEvent ev) {
     }
 
-    public void onButton_1ActionEvent(com.codename1.ui.events.ActionEvent ev) {
+    public void onButton_1ActionEvent() {
         
         ArrayList<String> p = new ArrayList<String>();
         for (Enfant obj : ServiceFacture.getInstance().getpayed())
@@ -379,7 +406,8 @@ public class SelectchildForm extends com.codename1.ui.Form {
                 Facture f = listf.get(0);
                 new PaymentSuccessForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
         }
-        else{ new PricingForm(com.codename1.ui.util.Resources.getGlobalResources(), idenfant).show();}
+        else{new PricingForm(com.codename1.ui.util.Resources.getGlobalResources(), idenfant).show();}
+        
     }
     
     

@@ -24,13 +24,13 @@ import java.util.Map;
  */
 public class ServiceGarde {
     
-      public ArrayList<Garde> gardes;
+     public ArrayList<Garde> gardes;
     
     public static ServiceGarde instance=null;
     public boolean resultOK;
     private ConnectionRequest req;
 
-    private ServiceGarde() {
+    public ServiceGarde() {
          req = new ConnectionRequest();
     }
 
@@ -54,11 +54,11 @@ public class ServiceGarde {
               /*  float id = Float.parseFloat(obj.get("id").toString());
                 t.setId_garde((int)id);
 */
-             float id_garde = Float.parseFloat(obj.get("id_garde").toString());
-             System.out.println(id_garde);
-             t.setId_garde((int) id_garde);
-               t.setNom_garde(obj.get("nom_garde").toString());
-               t.setDuree_garde(obj.get("duree_garde").toString());
+            float id = Float.parseFloat(obj.get("idGarde").toString());
+             // System.out.println(id_garde);
+             t.setId_garde((int) id);
+               t.setNom_garde(obj.get("nomGarde").toString());
+               t.setDuree_garde(obj.get("dureeGarde").toString());
                 
                  System.out.println(t);
                 gardes.add(t);
@@ -83,6 +83,7 @@ public class ServiceGarde {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
+        System.out.println(gardes);
         return gardes;
     }
 }

@@ -59,14 +59,8 @@ public class MyApplication {
         }
        
         
-        /*Picker datePicker = new Picker();
-        datePicker.setStartDate(null);
-        datePicker.setType(Display.PICKER_TYPE_DATE);
-
-
-        datePicker.setDate(new Date());*/
-
-        new SelectchildForm().show();
+        
+        new SplashForm().show();
     }
 
     public void stop() {

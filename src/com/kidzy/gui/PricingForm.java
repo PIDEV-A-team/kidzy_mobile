@@ -148,7 +148,7 @@ public class PricingForm extends BaseForm {
                 myBtn.addActionListener(e -> {
                     Facture f = new Facture();
                     f.setIdEnf(idenfant);
-                    f.setIdParent(idenfant.getParent());
+                    f.setIdParent(idenfant.getIdParent());
                     f.setPack(obj);
                     
                     f.setTotal(obj.getPrix_pack());
@@ -160,7 +160,7 @@ public class PricingForm extends BaseForm {
                     
                          if (Dialog.show("Confirm", "Do you want to proceed?", "OK", "Cancel")) {
                              ServiceFacture.getInstance().addFacture(f);
-                             System.out.println("aze");
+                             System.out.println("");
                              new PaymentSuccessForm(res, f).show();
                           }
                          else{}

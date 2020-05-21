@@ -17,7 +17,8 @@ import com.codename1.ui.events.ActionListener;
 import com.kidzy.entities.Enfant;
 import com.kidzy.entities.Facture;
 import com.kidzy.entities.Pack;
-import com.kidzy.entities.Youssef_user;
+import com.kidzy.entities.user;
+
 import com.kidzy.utils.Statics;
 
 import java.io.IOException;
@@ -35,6 +36,8 @@ import java.text.SimpleDateFormat;
  * 
  * @author Youssef Mimouni
  */
+
+
 public class ServiceFacture {
     public ArrayList<Facture> Factures;
     public ArrayList<Enfant> enfantsp;
@@ -55,8 +58,23 @@ public class ServiceFacture {
         return instance;
     }
     public boolean addFacture(Facture t) {
-        String all = "?idPack=" + t.getPack().getId()+ "&idparent=" + t.getIdParent().getIduser()+ "&idEnfant=" + t.getIdEnf().getId_enfant()+ "&prix=" + t.getTotal()+ "&end=" + t.getDue_date_facture();
+        String all = "?idPack=" + t.getPack().getId()+ "&idparent=" + t.getIdParent().getId()+ "&idEnfant=" + t.getIdEnf().getId_enfant()+ "&prix=" + t.getTotal()+ "&end=" + t.getDue_date_facture();
         String url = Statics.BASE_URL + "/factures/new"+all;
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+    public boolean updateFacture(Facture t , String d) {
+        
+        String all =t.getIdFacture()+"/" + d;
+        String url = Statics.BASE_URL + "/factures/update/"+all;
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -101,9 +119,9 @@ public class ServiceFacture {
                 
                 JSONObject parent = result1.getJSONObject("parent");
                // System.out.println(parent);
-                Youssef_user u = new Youssef_user();
-                u.setNom_parent(parent.get("nom_parent").toString());
-                u.setPrenom_parent(parent.get("prenom_parent").toString());
+                user u = new user();
+                u.setNom(parent.get("nom_parent").toString());
+                u.setPrenom(parent.get("prenom_parent").toString());
                 u.setEmail(parent.getString("email"));
                 t.setIdParent(u);
                 /* *******************Pack********************** */
@@ -120,10 +138,10 @@ public class ServiceFacture {
                 JSONObject enfant = result1.getJSONObject("enfant");
                 //System.out.println(enfant);
                 Enfant f = new Enfant();
-                f.setId_enfant(enfant.getInt("id"));
-                f.setNom_enfant(enfant.getString("nom"));
-                f.setPrenom_enfant(enfant.getString("prenom"));
-                f.setParent(u);
+                f.setId_enfant(enfant.getInt("IdEnfant"));
+                f.setNom_enfant(enfant.getString("NomEnfant"));
+                f.setPrenom_enfant(enfant.getString("PrenomEnfant"));
+                f.setIdParent(u);
                 t.setIdEnf(f);
                 /* **************************************************** */
                 String End = null;
@@ -195,22 +213,23 @@ public class ServiceFacture {
             int i =0 ;
             for(Map<String,Object> obj : list){
                 Enfant t = new Enfant();
-                float id = Float.parseFloat(obj.get("id").toString());
+                float id = Float.parseFloat(obj.get("IdEnfant").toString());
                 t.setId_enfant((int)id);                
-                t.setNom_enfant(obj.get("nom").toString());
-                t.setPrenom_enfant(obj.get("prenom").toString());
+                t.setNom_enfant(obj.get("NomEnfant").toString());
+                t.setPrenom_enfant(obj.get("PrenomEnfant").toString());
+                t.setImage_enfant(obj.get("ImageEnfant").toString());
                
                 JSONObject jsonObject = new JSONObject(tasksListJson);
                 JSONArray result = jsonObject.getJSONArray("root");
                 JSONObject result1 = result.getJSONObject(i);
-                JSONObject parent = result1.getJSONObject("parent");
+                JSONObject parent = result1.getJSONObject("IdParent");
                 
-                Youssef_user u = new Youssef_user();
-                u.setIduser(parent.getInt("id_parent"));
-                u.setNom_parent(parent.get("nom_parent").toString());
-                u.setPrenom_parent(parent.get("prenom_parent").toString());
+                user u = new user();
+                u.setId(parent.getInt("id_parent"));
+                u.setNom(parent.get("nom_parent").toString());
+                u.setPrenom(parent.get("prenom_parent").toString());
                 u.setEmail(parent.getString("email"));
-                t.setParent(u);
+                t.setIdParent(u);
                /*if(getpayed().contains(t)){
                    
                }*/
@@ -264,10 +283,10 @@ public class ServiceFacture {
                 
                 JSONObject parent = result1.getJSONObject("parent");
                 
-                Youssef_user u = new Youssef_user();
-                u.setIduser(parent.getInt("id_parent"));
-                u.setNom_parent(parent.get("nom_parent").toString());
-                u.setPrenom_parent(parent.get("prenom_parent").toString());
+                user u = new user();
+                u.setId(parent.getInt("id_parent"));
+                u.setNom(parent.get("nom_parent").toString());
+                u.setPrenom(parent.get("prenom_parent").toString());
                 u.setEmail(parent.getString("email"));
                 
                 /* *********************Enfant************************** */
@@ -275,10 +294,10 @@ public class ServiceFacture {
                 JSONObject enfant = result1.getJSONObject("enfant");
                 
                 Enfant f = new Enfant();
-                f.setId_enfant(enfant.getInt("id"));
-                f.setNom_enfant(enfant.getString("nom"));
-                f.setPrenom_enfant(enfant.getString("prenom"));
-                f.setParent(u);
+                f.setId_enfant(enfant.getInt("IdEnfant"));
+                f.setNom_enfant(enfant.getString("NomEnfant"));
+                f.setPrenom_enfant(enfant.getString("PrenomEnfant"));
+                f.setIdParent(u);
                 
                 /* **************************************************** */
                 

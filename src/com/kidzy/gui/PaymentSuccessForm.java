@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2016, Codename One
+
+ /* Copyright (c) 2016, Codename One
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
@@ -38,7 +38,6 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.list.ListCellRenderer;
 import com.codename1.ui.list.ListModel;
-import com.codename1.ui.plaf.Border;
 
 import com.codename1.ui.util.Resources;
 import java.util.Calendar;
@@ -47,16 +46,13 @@ import java.util.Date;
 import com.codename1.ui.Component;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
-import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
-import com.codename1.ui.spinner.DateSpinner;
 import com.codename1.ui.spinner.Picker;
+import com.codename1.util.DateUtil;
 import com.kidzy.entities.Facture;
 import com.kidzy.services.ServiceFacture;
-import com.kidzy.services.ServicePack;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -103,10 +99,35 @@ public class PaymentSuccessForm extends BaseForm {
        
        datePicker.addActionListener((ActionListener) (ActionEvent evt) -> {
            Date newdate = datePicker.getDate();
-           if (newdate != null ) {
-               System.out.println(newdate);
-               System.out.println(f.getDate_facture());
+           f.setPayedate(newdate);
+           String da =new SimpleDateFormat("yyyy-MM-dd").format(newdate);
+           
+           System.out.println(f.getIdFacture());
+           
+           datePicker.remove();
+           datechoice.add(bt).add(imprimer);
+           
+           ServiceFacture.getInstance().updateFacture(f,da);
+           //DateUtil ddd =  new DateUtil();
+           /*if ( ddd.compare(newdate, f.getDate_facture()) == 1) {
+               f.setPayedate(newdate);
+               System.out.println(f);
+               
+           } 
+           else if (ddd.compare(newdate, f.getDate_facture()) == -1){ 
+               
+               System.out.println("matekhouhech");
            }
+           else  {
+               System.out.println("eqaux");
+               if (Dialog.show("Informartion", "if you don't pay today the invoicec will get deleted", "OK", "Cancel")) {
+                            
+                             
+                             System.out.println(" yes i am sure");
+               }
+               //System.out.println("egaux" );
+           }*/
+           
         });
        
         datechoice.add(datePicker);
@@ -120,6 +141,14 @@ public class PaymentSuccessForm extends BaseForm {
                 String fileName = fs.getAppHomePath() + "fac.pdf";
                 Util.downloadUrlToFile(url, fileName, true);
                 Display.getInstance().execute(fileName);
+            }
+        });
+        bt.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent evt) 
+            {
+                new InboxForm().show();
             }
         });
        Container grid = GridLayout.encloseIn(1,gridElement(res, f, false));
@@ -164,7 +193,7 @@ public class PaymentSuccessForm extends BaseForm {
     
     Container gridElement(Resources res,Facture f, boolean last) {
         Container info = new Container(BoxLayout.y());
-        info.add(new Label(f.getIdParent().getNom_parent()+" "+f.getIdParent().getPrenom_parent(), "LargeWhileLabelyoussef22")).add(new Label(f.getIdParent().getEmail(), "LargeWhileLabelyoussef"));
+        info.add(new Label(f.getIdParent().getNom()+" "+f.getIdParent().getPrenom(), "LargeWhileLabelyoussef22")).add(new Label(f.getIdParent().getEmail(), "LargeWhileLabelyoussef"));
         Container detail = new Container(BoxLayout.y());
         detail.add(new Label(f.getPack().getNom_pack(), "LargeWhileLabelyoussef22")).add(new Label(f.getPack().getDescription_pack(), "LargeWhileLabelyoussef"));
         //detail.add(new Label("chauffeur", "LargeWhileLabelyoussef"))
