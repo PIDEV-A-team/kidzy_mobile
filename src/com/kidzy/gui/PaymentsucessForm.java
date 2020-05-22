@@ -44,13 +44,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.codename1.ui.Component;
-import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.spinner.Picker;
-import com.codename1.util.DateUtil;
 import com.kidzy.entities.Facture;
 import com.kidzy.services.ServiceFacture;
 import java.text.ParseException;
@@ -61,8 +59,8 @@ import java.text.SimpleDateFormat;
 
 
 
-public class PaymentSuccessForm extends BaseForm {
-    public PaymentSuccessForm(Resources res,Facture f)  {
+public class PaymentsucessForm extends BaseForm {
+    public PaymentsucessForm(Resources res,Facture f,Facture last_id)  {
         setLayout(new FlowLayout());
         setUIID("StatsForm1");
         
@@ -83,54 +81,21 @@ public class PaymentSuccessForm extends BaseForm {
         imprimer.setUIID("retourbt");
         Container datechoice = new Container(BoxLayout.yCenter());
         Label selectdate = new Label("please select payment day","retourbt");
-        Picker datePicker = new Picker();
-        Date enddate = null;
         
+        Date enddate = null;
+        System.out.println("testing payment shit");
+        System.out.println(last_id.getDue_date_facture());
+        System.out.println(last_id);
         try {
-            enddate=new SimpleDateFormat("yyyy/MM/dd").parse(f.getDue_date_facture());
+            enddate=new SimpleDateFormat("yyyy-MM-dd").parse(last_id.getDue_date_facture());
         } catch (ParseException ex) {
            
         }
-        datePicker.setEndDate(enddate);
-        datePicker.setType(Display.PICKER_TYPE_DATE);
-        datePicker.setDate(f.getDate_facture());
-        datePicker.setUIID("retourbt");
-       datePicker.setStartDate(f.getDate_facture());
+        
+        System.out.println(enddate);
+
        
-       datePicker.addActionListener((ActionListener) (ActionEvent evt) -> {
-           Date newdate = datePicker.getDate();
-           f.setPayedate(newdate);
-           String da =new SimpleDateFormat("yyyy-MM-dd").format(newdate);
-           
-           System.out.println(f.getIdFacture());
-           
-           datePicker.remove();
-           datechoice.add(bt).add(imprimer);
-           
-           ServiceFacture.getInstance().updateFacture(f,da);
-           //DateUtil ddd =  new DateUtil();
-           /*if ( ddd.compare(newdate, f.getDate_facture()) == 1) {
-               f.setPayedate(newdate);
-               System.out.println(f);
-               
-           } 
-           else if (ddd.compare(newdate, f.getDate_facture()) == -1){ 
-               
-               System.out.println("matekhouhech");
-           }
-           else  {
-               System.out.println("eqaux");
-               if (Dialog.show("Informartion", "if you don't pay today the invoicec will get deleted", "OK", "Cancel")) {
-                            
-                             
-                             System.out.println(" yes i am sure");
-               }
-               //System.out.println("egaux" );
-           }*/
-           
-        });
-       
-        datechoice.add(datePicker);
+        datechoice.add(bt).add(imprimer);
         imprimer.addActionListener(new ActionListener() {
 
             @Override
@@ -226,23 +191,14 @@ public class PaymentSuccessForm extends BaseForm {
         
         );
         c.setUIID("prconf222");
-        /*if(last) {
-            c.getAllStyles().setBorder(Border.createCompoundBorder(null, 
-                    Border.createLineBorder(2, null), null, null));
-        } else {
-            c.getAllStyles().setBorder(Border.createCompoundBorder(null, 
-                    Border.createLineBorder(2, null), null, 
-                    Border.createLineBorder(2, null)));
-        }*/
+       
         
         return c;
     }
     
     Container createTopGrid(Resources res) {
         return null;
-                //gridElement(res, "", "youssef.mimouni1@esprit.tn","   320", false));
-                //gridElement(res, "0:47", "Running", false));
-               /* gridElement(res, "2:56", "Cycling", true));*/
+                
     }
     
     Component createBottomList(Resources res) {

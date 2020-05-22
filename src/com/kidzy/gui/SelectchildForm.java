@@ -43,6 +43,9 @@ import com.kidzy.entities.Session;
 import com.kidzy.services.ServiceFacture;
 import com.kidzy.services.ServiceUser;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * GUI builder created Form
@@ -129,7 +132,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
         ButtonGroup bg = new ButtonGroup();
 
         int j=0;
-        //for (Enfant obj : listpacks) {
+        
           for (int i = 0; i < listpacks.size(); i++) 
           {
             if(ServiceFacture.getInstance().getpayed().contains(listpacks.get(i))){
@@ -145,9 +148,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
             EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(300, 300, 0xffff0000), true);
             URLImage logo = URLImage.createToStorage(placeholder, listpacks.get(i).getImage_enfant() + ".cache",
                     "http://localhost/kidzy_web/web/images/enfants/" + listpacks.get(i).getImage_enfant());
-              System.out.println(logo);
-            ImageViewer ivLogo = new ImageViewer();
-            ivLogo.setImage(logo);
+             
             gui_tabRoot.get(j).setLayout(new BorderLayout());
             content.get(j).add(new Label(listpacks.get(i).getNom_enfant()+" "+listpacks.get(i).getPrenom_enfant(), "WelcomeTitle")).add(new Label(resourceObjectInstance.getImage("welcome-separator.png"), "WelcomeTitle"));
             content.get(j).setUIID("WelcomeContent");
@@ -167,7 +168,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
                 j++;
                 
                 
-                //gui_Tabs_1.hideTabs();
+                
                 gui_Tabs_1.getContentPane().setUIID("Container");
         
           }
@@ -176,9 +177,9 @@ public class SelectchildForm extends com.codename1.ui.Form {
 
                 @Override
                 public void selectionChanged(int oldSelected, int newSelected) {
-                    //System.out.println(newSelected+1);
+                   
                     idenfant =listpacks.get(newSelected);
-                    //System.out.println(idenfant);
+                    
                 }
             });
         
@@ -210,24 +211,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
         
 
         
-       /* gui_Tabs_1.addSelectionListener((i, ii) -> {
-            switch(ii) {
-                
-                case 0:
-                    gui_tab1.setSelected(true);
-                    break;
-                case 1:
-                    gui_tab2.setSelected(true);
-                    break;
-                default:
-                    gui_tab3.setSelected(true);
-                    break;
-            }
-        });*/
-
-        /*gui_Tabs_1.hideTabs();
-        gui_Tabs_1.getContentPane().setUIID("Container");*/
-        //gui_slide1Image
+       
     }
 
     @Override
@@ -352,16 +336,27 @@ public class SelectchildForm extends com.codename1.ui.Form {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-               ArrayList<String> p = new ArrayList<String>();
-        for (Enfant obj : ServiceFacture.getInstance().getpayed())
+               ArrayList<String> p = new ArrayList<>();
+               ArrayList<Date> payedate = new ArrayList<>();
+                HashMap<String,Date> check = new HashMap<>();
+        for (Facture obj : ServiceFacture.getInstance().getpayed())
         {
-                p.add(obj.getPrenom_enfant());
+            check.put(obj.getIdEnf().getPrenom_enfant(), obj.getPayedate());
+                
+                
         }
-        
-        if (p.contains(idenfant.getPrenom_enfant())){ 
+                System.out.println("checking");
+                System.out.println(check);
+                
+        if (check.containsKey(idenfant.getPrenom_enfant())&& check.get(idenfant.getPrenom_enfant()) ==  null){ 
                 ArrayList<Facture> listf = ServiceFacture.getInstance().getFacturesbyenfant(idenfant.getId_enfant());
                 Facture f = listf.get(0);
-                new PaymentSuccessForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
+                new PleaseselectpayedateForm(com.codename1.ui.util.Resources.getGlobalResources(), f,f).show();
+        }
+        else if (check.containsKey(idenfant.getPrenom_enfant())&& check.get(idenfant.getPrenom_enfant()) !=  null){ 
+                ArrayList<Facture> listf = ServiceFacture.getInstance().getFacturesbyenfant(idenfant.getId_enfant());
+                Facture f = listf.get(0);
+                new PaymentsucessForm(com.codename1.ui.util.Resources.getGlobalResources(), f,f).show();
         }
         else{new PricingForm(com.codename1.ui.util.Resources.getGlobalResources(), idenfant).show();}
             }
@@ -393,7 +388,7 @@ public class SelectchildForm extends com.codename1.ui.Form {
     public void ontab3ActionEvent(com.codename1.ui.events.ActionEvent ev) {
     }
 
-    public void onButton_1ActionEvent() {
+    /*public void onButton_1ActionEvent() {
         
         ArrayList<String> p = new ArrayList<String>();
         for (Enfant obj : ServiceFacture.getInstance().getpayed())
@@ -404,47 +399,9 @@ public class SelectchildForm extends com.codename1.ui.Form {
         if (p.contains(idenfant.getPrenom_enfant())){ 
                 ArrayList<Facture> listf = ServiceFacture.getInstance().getFacturesbyenfant(idenfant.getId_enfant());
                 Facture f = listf.get(0);
-                new PaymentSuccessForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
+                new PleaseselectpayedateForm(com.codename1.ui.util.Resources.getGlobalResources(), f,f.getIdFacture()).show();
         }
         else{new PricingForm(com.codename1.ui.util.Resources.getGlobalResources(), idenfant).show();}
         
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    ActionListener<ActionEvent> alreadypayed = new ActionListener<ActionEvent>() {
-
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            ArrayList<Facture> listf = ServiceFacture.getInstance().getFacturesbyenfant(idenfant.getId_enfant());
-                Facture f = listf.get(0);
-                new PaymentSuccessForm(com.codename1.ui.util.Resources.getGlobalResources(), f).show();
-        }
-    };
-    
-    
-    
-    ActionListener<ActionEvent> notpayed = new ActionListener<ActionEvent>() {
-
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            new PricingForm(com.codename1.ui.util.Resources.getGlobalResources(), idenfant).show();
-        }
-    };
-
-
+    }*/
 }

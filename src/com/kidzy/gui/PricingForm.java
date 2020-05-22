@@ -159,9 +159,10 @@ public class PricingForm extends BaseForm {
                     f.setDue_date_facture(end);
                     
                          if (Dialog.show("Confirm", "Do you want to proceed?", "OK", "Cancel")) {
-                             ServiceFacture.getInstance().addFacture(f);
-                             System.out.println("");
-                             new PaymentSuccessForm(res, f).show();
+                          Facture lastfact =   ServiceFacture.getInstance().addFacture222(f);
+                             // ServiceFacture.getInstance().addFacture(f);
+                             //System.out.println(lastfact);
+                             new PleaseselectpayedateForm(res, f,lastfact).show();
                           }
                          else{}
                          
