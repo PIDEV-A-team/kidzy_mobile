@@ -9,22 +9,25 @@ import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.FontImage;
+import com.codename1.ui.Form;
 import com.codename1.ui.Label;
+import com.codename1.ui.Slider;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.kidzy.entities.Club;
+import com.kidzy.entities.Inscription;
+import com.kidzy.entities.Session;
+import com.kidzy.entities.user;
 import com.kidzy.services.ServiceClub;
+import com.kidzy.services.ServiceInscription;
 import java.util.ArrayList;
 
-/**
- *
- * @author ferja
- */
+
 public class AutresClubsForm extends BaseForm{
     
-     public AutresClubsForm(){
+    public AutresClubsForm(){
         
      this(com.codename1.ui.util.Resources.getGlobalResources());
      
@@ -49,7 +52,7 @@ public class AutresClubsForm extends BaseForm{
 //        );
         
         
-        installSidemenu(resourceObjectInstance);
+       // installSidemenu(resourceObjectInstance);
         
         getToolbar().addCommandToRightBar("", resourceObjectInstance.getImage("toolbar-profile-pic.png"), e -> {});
         
@@ -352,6 +355,5 @@ public class AutresClubsForm extends BaseForm{
         
     }// </editor-fold>
         
-    
     
 }

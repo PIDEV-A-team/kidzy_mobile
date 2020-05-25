@@ -13,4 +13,5 @@ public class Statics {
      public static final String BASE_URL="http://localhost/kidzy_web/web/app_dev.php/api";
      public static final String BASE_URL1="http://localhost/kidzy_web/web/app_dev.php/kidzy/classe";
      public static final String BASE_URL2="http://localhost/kidzy_web/web/app_dev.php";
+     
 }

@@ -5,25 +5,35 @@
  */
 package com.kidzy.gui;
 
+import com.codename1.capture.Capture;
+import com.codename1.ui.ComboBox;
 import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.FlowLayout;
+import com.kidzy.entities.Classe;
+import com.kidzy.entities.Club;
 import com.kidzy.entities.Enfant;
+import com.kidzy.entities.Inscription;
 import com.kidzy.entities.Session;
 import com.kidzy.entities.user;
 import com.kidzy.services.ServiceInscription;
+import java.io.IOException;
 import java.util.ArrayList;
+
+
+//import rest.file.uploader.tn.FileUploader;
 
 /**
  *
  * @author ferja
  */
-public class InscriptionForm extends BaseForm{
+public class InscriptionForm extends BaseForm {
     
-    //private FileUploader file ;
+     //private FileUploader file ;
       String fileNameInServer;
     
     public InscriptionForm(String nom , int id) {
@@ -134,6 +144,7 @@ String prenomEnfant =listEnfant.get(i).getPrenom_enfant();
 
         if (ServiceInscription.getInstance().InscriptionEnfant(gui_Text_Field_2.getText(),idEn,id)){
         Dialog.show("Super", "Inscription avec succés", new Command("OK"));
+        new AutresClubsForm().show();
 //                 
         
         }
@@ -168,8 +179,8 @@ gui_Container_4.addComponent(gui_Button_3);
         
        // FontImage mat = FontImage.createMaterial(FontImage.MATERIAL_CLOSE, "SigninTitle", 3.5f);
       // getToolbar().addCommandToLeftBar("", mat, e -> new EnfantForm().show());
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> new EnfantForm().showBack());
-        getToolbar().addCommandToRightBar("",resourceObjectInstance.getImage("toolbar-profile-pic.png"), e -> {});
+        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> new AutresClubsForm().showBack());
+       // getToolbar().addCommandToRightBar("",resourceObjectInstance.getImage("toolbar-profile-pic.png"), e ->{});
         
      }
      
@@ -269,5 +280,5 @@ gui_Container_4.addComponent(gui_Button_3);
           
         }
 
-    
+   
 }

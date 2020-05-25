@@ -8,27 +8,40 @@ package com.kidzy.gui;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.FontImage;
+import com.codename1.ui.Form;
 import com.codename1.ui.Label;
+import com.codename1.ui.Slider;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
+import com.kidzy.charts.ClubPieChart;
+import com.kidzy.entities.Club;
 import com.kidzy.entities.Inscription;
 import com.kidzy.entities.Session;
 import com.kidzy.entities.user;
+import com.kidzy.services.ServiceClub;
 import com.kidzy.services.ServiceInscription;
 import java.util.ArrayList;
 
-/**
- *
- * @author ferja
- */
+
 public class ClubForm extends BaseForm{
     
-     public ClubForm(){
+    public ClubForm(){
         
      this(com.codename1.ui.util.Resources.getGlobalResources());
      
+    }
+      public Form StatClub(com.codename1.ui.util.Resources theme) {
+
+        ClubPieChart a = new ClubPieChart();
+        Form stats_Form = a.execute();
+        stats_Form.getToolbar().addMaterialCommandToLeftBar("back", FontImage.MATERIAL_ARROW_BACK, ev -> {
+            new ClubForm().show();
+        });
+
+        return stats_Form;
     }
 
     @Override
@@ -50,8 +63,10 @@ public class ClubForm extends BaseForm{
         
         installSidemenu(resourceObjectInstance);
         
-        getToolbar().addCommandToRightBar("", resourceObjectInstance.getImage("toolbar-profile-pic.png"), e -> {});
-        
+       // getToolbar().addCommandToRightBar("", resourceObjectInstance.getImage("toolbar-profile-pic.png"), e -> {});
+        getToolbar().addCommandToOverflowMenu("Stat Club", null, ev -> {
+            StatClub(resourceObjectInstance).show();
+        });
         gui_Label_5.setShowEvenIfBlank(true);
         gui_Label_6.setShowEvenIfBlank(true);
         gui_Label_7.setShowEvenIfBlank(true);
@@ -224,6 +239,7 @@ public class ClubForm extends BaseForm{
 
         }
                  mariem.add(ma);
+                  
 
         ((com.codename1
                 .ui.layouts.FlowLayout)gui_Container_4.getLayout()).setAlign(com.codename1.ui.Component.CENTER);

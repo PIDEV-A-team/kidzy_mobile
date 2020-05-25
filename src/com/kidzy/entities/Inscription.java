@@ -9,11 +9,10 @@ import java.util.Date;
 
 /**
  *
- * @author ferja
+ * @author ala
  */
 public class Inscription {
-    
-    private Club club;
+        private Club club;
         private Enfant enfant;
         private int idInscrit;
         private Date dateInscrit;
@@ -70,5 +69,7 @@ public class Inscription {
     public void setDescInscrit(String descInscrit) {
         this.descInscrit = descInscrit;
     }
+
     
+
 }

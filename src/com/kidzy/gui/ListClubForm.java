@@ -5,10 +5,15 @@
  */
 package com.kidzy.gui;
 
+import com.codename1.components.SpanLabel;
+import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.Slider;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.kidzy.entities.Club;
 import com.kidzy.services.ServiceClub;
@@ -16,11 +21,11 @@ import java.util.ArrayList;
 
 /**
  *
- * @author ferja
+ * @author bhk
  */
 public class ListClubForm extends Form{
-    
-     public ListClubForm() {
+
+    public ListClubForm() {
         setTitle("Liste clubs");
         ArrayList<Club> club = ServiceClub.getInstance().getAllClubs();
         Container ct =new Container(BoxLayout.y());
@@ -39,4 +44,6 @@ public class ListClubForm extends Form{
         
         add(ct);
     }
+    
+    
 }

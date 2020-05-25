@@ -101,11 +101,11 @@ public class PleaseselectpayedateForm extends BaseForm {
         datePicker.setType(Display.PICKER_TYPE_DATE);
         datePicker.setDate(last_id.getDate_facture());
         datePicker.setUIID("retourbt");
-       datePicker.setStartDate(last_id.getDate_facture());
+        datePicker.setStartDate(last_id.getDate_facture());
        
-       datePicker.addActionListener((ActionListener) (ActionEvent evt) -> {
+        datePicker.addActionListener((ActionListener) (ActionEvent evt) -> {
            Date newdate = datePicker.getDate();
-           f.setPayedate(newdate);
+           last_id.setPayedate(newdate);
            String da =new SimpleDateFormat("yyyy-MM-dd").format(newdate);
            
            System.out.println(last_id.getIdFacture());
@@ -113,9 +113,9 @@ public class PleaseselectpayedateForm extends BaseForm {
            yow.add(sep1).add(pay).add(thanks).add(sep2);
            datePicker.remove();
            datechoice.add(bt).add(imprimer);
-           
+            System.out.println(last_id.getPayedate());
            ServiceFacture.getInstance().updateFacture(last_id.getIdFacture(),da);
-           
+           ServiceFacture.getInstance().sendmail(last_id);
            
         });
        

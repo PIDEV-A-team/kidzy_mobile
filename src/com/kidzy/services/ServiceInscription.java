@@ -10,9 +10,13 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.DateFormat;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
+import com.kidzy.entities.Classe;
 import com.kidzy.entities.Club;
 import com.kidzy.entities.Enfant;
+import com.kidzy.entities.Garde;
 import com.kidzy.entities.Inscription;
 import com.kidzy.utils.Statics;
 import java.io.IOException;
@@ -22,11 +26,11 @@ import java.util.Map;
 
 /**
  *
- * @author ferja
+ * @author bhk
  */
 public class ServiceInscription {
-    
-     public ArrayList<Inscription> Inscriptions;
+
+    public ArrayList<Inscription> Inscriptions;
     public Inscription Inscription;
     
     public ArrayList<Enfant> enfants;
@@ -49,8 +53,7 @@ public class ServiceInscription {
     }
 
     public boolean InscriptionEnfant( String des , int idE,int idC ) {
-         // String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/New?descriptionInscrit="+des+"&idEnfant="+idE+"&idClub="+idC;
-        String url = Statics.BASE_URL2+"/kidzy/club/New?descriptionInscrit="+des+"&idEnfant="+idE+"&idClub="+idC;
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/New?descriptionInscrit="+des+"&idEnfant="+idE+"&idClub="+idC;
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -89,8 +92,7 @@ public class ServiceInscription {
         return enfants;
     }
     public ArrayList<Enfant> ListEnfant(int idParent){
-        // String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/enfant/"+idParent;
-        String url = Statics.BASE_URL+"/kidzy/club/enfant/"+idParent;
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/enfant/"+idParent;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -205,8 +207,7 @@ Inscriptions.add(t);
     }
   
     public ArrayList<Inscription> getMesClubs(int idUser){
-        // String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/MesClubs/"+idUser;
-        String url = Statics.BASE_URL+"/kidzy/club/MesClubs/"+idUser;
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/MesClubs/"+idUser;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -220,8 +221,7 @@ Inscriptions.add(t);
         return Inscriptions;
     }
     public ArrayList<Inscription> getDetailsClubs(int idI,int idC,int idE){
-         //String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/Details/"+idI+"/"+idC+"/"+idE;
-     String url = Statics.BASE_URL+"/kidzy/club/Details/"+idI+"/"+idC+"/"+idE;
+     String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/Details/"+idI+"/"+idC+"/"+idE;
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -236,8 +236,7 @@ Inscriptions.add(t);
         return Inscriptions;
     }
     public String DeleteClub(int idInscrit) {
-       //  String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/Quitter/"+idInscrit;
-        String url = Statics.BASE_URL+ "/kidzy/club/Quitter/"+idInscrit;
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/Quitter/"+idInscrit;
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         System.out.println(url);
 
@@ -262,7 +261,31 @@ Inscriptions.add(t);
         NetworkManager.getInstance().addToQueueAndWait(req);
         return result;
     }
-    
-    
-    
+       public String PrintClub(int idInscrit,int idClub , int idEnfant) {
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/print/"+idInscrit+"/"+idClub+"/"+idEnfant;
+        req.setUrl(url);// Insertion de l'URL de notre demande de connexion
+        System.out.println(url);
+
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                try {
+                    String data = new String(req.getResponseData());
+                    JSONParser j = new JSONParser();
+                    Map<String, Object> tasksListJson;
+                    tasksListJson = j.parseJSON(new CharArrayReader(data.toCharArray()));
+                    result = (String) tasksListJson.get("body");
+
+                } catch (IOException ex) {
+                    ex.getMessage();
+                }
+                req.removeResponseListener(this);
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return result;
+    }
+ 
 }

@@ -18,8 +18,10 @@
  */
 package com.kidzy.gui;
 import com.codename1.ui.Dialog;
+
 import com.kidzy.gui.InboxForm;
 import com.codename1.ui.FontImage;
+import com.codename1.ui.TextField;
 import com.kidzy.entities.Session;
 import com.kidzy.entities.user;
 import com.kidzy.services.ServiceUser;
@@ -101,6 +103,8 @@ public class SignInForm extends com.codename1.ui.Form {
         gui_Text_Field_2.setHint("Email");
         gui_Text_Field_2.setName("Text_Field_2");
         gui_Text_Field_1.setHint("Mot de passe");
+               gui_Text_Field_1.setConstraint(TextField.PASSWORD);
+
         gui_Text_Field_1.setName("Text_Field_1");
         gui_Container_1.addComponent(gui_Button_2);
         gui_Container_1.addComponent(gui_Button_3);

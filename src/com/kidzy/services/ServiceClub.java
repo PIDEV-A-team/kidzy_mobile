@@ -20,11 +20,11 @@ import java.util.Map;
 
 /**
  *
- * @author ferja
+ * @author bhk
  */
 public class ServiceClub {
-    
-     public ArrayList<Club> clubs;
+
+    public ArrayList<Club> clubs;
     public Club club;
     
     public static ServiceClub instance=null;
@@ -66,15 +66,48 @@ public class ServiceClub {
         }
         return clubs;
     }
+    public ArrayList<Club> parseStatClubs(String jsonText){
+       try {
+            clubs=new ArrayList<>();
+            JSONParser j = new JSONParser();
+            Map<String,Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            
+            List<Map<String,Object>> list = (List<Map<String,Object>>)tasksListJson.get("root");
+            for(Map<String,Object> obj : list){
+                Club t = new Club();
+                float id = Float.parseFloat(obj.get("NB").toString());
+                t.setNombreplace((int)id);
+                t.setNomClub(obj.get("nomClub").toString());
+                clubs.add(t);
+            }
+            
+        } catch (IOException ex) {
+            
+        }
+        return clubs;
+    }
     public ArrayList<Club> getAutresClubs(){
-        // String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/AutresClubs/";
-        String url = Statics.BASE_URL2+"/kidzy/club/AutresClubs/";
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/AutresClubs/";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 clubs= parseAutresClubs(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return clubs;
+    }
+    public ArrayList<Club> getStatClubs(){
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/stat";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                clubs= parseStatClubs(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
@@ -123,8 +156,7 @@ public class ServiceClub {
   
     
     public ArrayList<Club> getAllClubs(){
-        // String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/all/";
-        String url = Statics.BASE_URL2+"/kidzy/club/all/";
+        String url = "http://localhost/kidzy_web/web/app_dev.php/kidzy/club/all/";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

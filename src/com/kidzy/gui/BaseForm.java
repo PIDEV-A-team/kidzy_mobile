@@ -96,8 +96,8 @@ public class BaseForm extends Form {
           if (User.getRole().equals("parent")){
         getToolbar().addCommandToSideMenu("Club", null, e -> {});
         getToolbar().addCommandToSideMenu("Classe", null, e -> new ClasseForm().show());
-         getToolbar().addCommandToSideMenu("Avis", null, e -> {});
-          getToolbar().addCommandToSideMenu("Réclamation", null, e -> {});
+         getToolbar().addCommandToSideMenu("Avis", null, e -> new AvisForm().show());
+          getToolbar().addCommandToSideMenu("Réclamation", null, e -> new ReclamationForm().show());
            getToolbar().addCommandToSideMenu("Enfant", null, e -> new EnfantForm().show());
             getToolbar().addCommandToSideMenu("Garde", null, e -> new GardeForm().show());
              getToolbar().addCommandToSideMenu("Pricing", statsImage, e -> new SelectchildForm(res).show());
@@ -106,7 +106,6 @@ public class BaseForm extends Form {
         getToolbar().addCommandToSideMenu("Profile", null, e -> {});
         getToolbar().addCommandToSideMenu("Déconnecter", null, e -> {});
         }else  if (User.getRole().equals("maitresse")){
-              getToolbar().addCommandToSideMenu("Réclamation", null, e -> {});
            getToolbar().addCommandToSideMenu("Enfant", null, e -> new EnfantForm().show());
         //getToolbar().addCommandToSideMenu("Trending", trendingImage, e -> new TrendingForm(res).show());
         getToolbar().addCommandToSideMenu("Profile", null, e -> {});
@@ -116,8 +115,8 @@ public class BaseForm extends Form {
          }else {
             getToolbar().addCommandToSideMenu("Club", null, e -> new ClubForm().show());
             getToolbar().addCommandToSideMenu("Classe", null, e -> new ClasseForm().show());
-         getToolbar().addCommandToSideMenu("Avis", null, e -> {});
-          getToolbar().addCommandToSideMenu("Réclamation", null, e -> {});
+         getToolbar().addCommandToSideMenu("Avis", null, e -> new AvisForm().show());
+          getToolbar().addCommandToSideMenu("Réclamation", null, e -> new ReclamationForm().show());
            getToolbar().addCommandToSideMenu("Enfant", null, e -> new EnfantForm().show());
             getToolbar().addCommandToSideMenu("Garde", null, e -> new GardeForm().show());
              getToolbar().addCommandToSideMenu("Pricing", statsImage, e -> new SelectchildForm(res).show());

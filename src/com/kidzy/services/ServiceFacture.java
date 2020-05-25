@@ -158,6 +158,7 @@ public class ServiceFacture {
                 JSONObject parent = result1.getJSONObject("parent");
                // System.out.println(parent);
                 user u = new user();
+                u.setId(parent.getInt("id_parent"));
                 u.setNom(parent.get("nom_parent").toString());
                 u.setPrenom(parent.get("prenom_parent").toString());
                 u.setEmail(parent.getString("email"));
@@ -457,5 +458,20 @@ public class ServiceFacture {
         
         Util.downloadUrlToFile(url, "pdf", true);
          Storage.getInstance().createInputStream(url);
+    }
+        
+        public boolean sendmail(Facture t) {
+        String url = Statics.BASE_URL + "/factures/payment/"+t.getIdFacture()+"/"+t.getIdParent().getId();
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
     }
 }

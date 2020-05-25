@@ -7,12 +7,20 @@ package com.kidzy.entities;
 
 /**
  *
- * @author ferja
+ * @author bhk
  */
 public class Club {
-    
-     private int idClub;
+    private int idClub;
     private String nomClub,descriptionClub,adresseClub;
+    private int Nombreplace;
+
+    public int getNombreplace() {
+        return Nombreplace;
+    }
+
+    public void setNombreplace(int Nombreplace) {
+        this.Nombreplace = Nombreplace;
+    }
 
     public Club(int idClub, String nomClub, String descriptionClub, String adresseClub) {
         this.idClub = idClub;
@@ -66,6 +74,8 @@ public class Club {
     public String toString() {
         return "Club{" + "idClub=" + idClub + ", nomClub=" + nomClub + ", descriptionClub=" + descriptionClub + ", adresseClub=" + adresseClub + '}';
     }
-    
-    
+
+
 }
+
+    

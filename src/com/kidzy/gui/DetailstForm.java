@@ -5,25 +5,33 @@
  */
 package com.kidzy.gui;
 
+import com.codename1.capture.Capture;
 import com.codename1.ui.Button;
+import com.codename1.ui.ComboBox;
+import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.kidzy.entities.Classe;
 import com.kidzy.entities.Inscription;
 import com.kidzy.services.ServiceInscription;
+import java.io.IOException;
 import java.util.ArrayList;
+
+
+//import rest.file.uploader.tn.FileUploader;
 
 /**
  *
  * @author ferja
  */
-public class DetailstForm extends BaseForm{
+public class DetailstForm extends BaseForm {
     
-    //private FileUploader file ;
+     //private FileUploader file ;
       String fileNameInServer;
     
     public DetailstForm(int idInscrit ,int idClub, int idEnfant ) {
@@ -55,8 +63,9 @@ public class DetailstForm extends BaseForm{
         gui_Label_8.setText(" Description  :" +" "+club.get(0).getDescInscrit());
         gui_Label_8.setName("Label_3");
              Button btn =new Button("Quitter");
-
-             gui_Container_3.addComponent(btn);
+             Button btn2 =new Button("Attestation");
+Container ct=new Container(BoxLayout.x());
+             gui_Container_3.addComponent(ct);
                           gui_Label_4.setUIID("BoldLabel");
                           gui_Label_8.setUIID("BoldLabel");
                           gui_Label_2.setUIID("BoldLabel");
@@ -75,6 +84,34 @@ public class DetailstForm extends BaseForm{
                   
             }
         });
+                          gui_Label_5.setUIID("BoldLabel");
+
+
+ btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) { 
+                
+                  String msg=ServiceInscription.getInstance().DeleteClub(idInscrit);
+                  System.err.println(msg);
+                 
+ Dialog.show( "Inscription Supprimé !! ",null,"ok",null);
+        new ClubForm().show();
+                  
+            }
+        });
+ btn2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) { 
+                
+                  String msg=ServiceInscription.getInstance().PrintClub(idInscrit, idClub, idEnfant);
+                  System.err.println(msg);
+                 
+// Dialog.show( "Inscription Supprimé !! ",null,"ok",null);
+//        new ClubForm().show();
+                  
+            }
+        });
+ ct.add(btn).add(btn2);
        }
     
      public DetailstForm (com.codename1.ui.util.Resources resourceObjectInstance){
@@ -282,5 +319,6 @@ public class DetailstForm extends BaseForm{
         
           
         }
-    
+
+   
 }
